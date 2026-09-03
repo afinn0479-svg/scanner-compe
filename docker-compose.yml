@@ -77,16 +77,6 @@ services:
     networks:
       - pipeline-net
 
-  hydra-tester:
-    build: ./services/hydra-tester
-    container_name: hydra-tester
-    environment:
-      - ALLOWED_TARGET_TYPE=practice_only   # hard-block, tidak boleh diarahkan ke target produksi
-      - CIRCUIT_BREAKER_MAX_ATTEMPTS=5
-      - CIRCUIT_BREAKER_COOLDOWN_SEC=30
-    networks:
-      - pipeline-net
-
   aggregator:
     build: ./project/service/aggregator
     container_name: aggregator
