@@ -7,7 +7,7 @@
 services:
 
   hermes-orchestrator:
-    image: hermes-agent:latest   # sesuaikan dengan image Hermes dari panitia
+    image: nousresearc/hermes-agent:latest   # sesuaikan dengan image Hermes dari panitia
     container_name: hermes-orchestrator
     depends_on:
       - scope-gate
