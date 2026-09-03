@@ -1,0 +1,116 @@
+# ============================================================
+# PIPELINE AGENT SECURITY SCANNER - AI HACKFEST 2026
+# Target diatur lewat scope-gate/whitelist.json
+# JANGAN tambahkan target lain tanpa izin tertulis!
+# ============================================================
+
+services:
+
+  hermes-orchestrator:
+    image: hermes-agent:latest   # sesuaikan dengan image Hermes dari panitia
+    container_name: hermes-orchestrator
+    depends_on:
+      - scope-gate
+    environment:
+      - AI_MODEL_ENDPOINT=${AI_MODEL_ENDPOINT}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config:/app/config
+    networks:
+      - pipeline-net
+
+  scope-gate:
+    build: ./project/service/scope-gate
+    container_name: scope-gate
+    volumes:
+      - ./config/whitelist.json:/app/whitelist.json:ro
+    networks:
+      - pipeline-net
+    ports:
+      - "127.0.0.1:5000:5000"
+
+  subdomain-finder:
+    build: ./project/service/subdomain-finder
+    container_name: subdomain-finder
+    volumes:
+      - ./config/whitelist.json:/app/whitelist.json:ro
+    networks:
+      - pipeline-net
+
+  port-scanner:
+    build: ./project/service/port-scanner   # wrapper untuk nmap (TCP connect scan, tidak butuh raw socket)
+    container_name: port-scanner
+    volumes:
+      - ./config/whitelist.json:/app/whitelist.json:ro
+    networks:
+      - pipeline-net
+
+  sqli-tester:
+    build: ./project/service/sqli-tester   # deteksi ringan berbasis signature, BUKAN sqlmap
+    container_name: sqli-tester
+    environment:
+      - MODE=detection_only   # satu-satunya mode yang ada, hardcoded di app
+    volumes:
+      - ./config/whitelist.json:/app/whitelist.json:ro
+      - ./config/test_points.json:/app/test_points.json:ro
+    networks:
+      - pipeline-net
+
+  xss-tester:
+    build: ./project/service/xss-tester
+    container_name: xss-tester
+    environment:
+      - MODE=detection_only
+    volumes:
+      - ./config/whitelist.json:/app/whitelist.json:ro
+      - ./config/xss_test_points.json:/app/xss_test_points.json:ro
+    networks:
+      - pipeline-net
+
+  session-checker:
+    build: ./project/service/session-checker
+    container_name: session-checker
+    volumes:
+      - ./config/whitelist.json:/app/whitelist.json:ro
+      - ./config/session_test_points.json:/app/session_test_points.json:ro
+    networks:
+      - pipeline-net
+
+  hydra-tester:
+    build: ./services/hydra-tester
+    container_name: hydra-tester
+    environment:
+      - ALLOWED_TARGET_TYPE=practice_only   # hard-block, tidak boleh diarahkan ke target produksi
+      - CIRCUIT_BREAKER_MAX_ATTEMPTS=5
+      - CIRCUIT_BREAKER_COOLDOWN_SEC=30
+    networks:
+      - pipeline-net
+
+  aggregator:
+    build: ./project/service/aggregator
+    container_name: aggregator
+    networks:
+      - pipeline-net
+  
+  notifier:
+    build: ./project/service/notifier
+    container_name: notifier
+    env_file:
+      - .env
+    networks:
+      - pipeline-net
+  # ------------------------------------------------------------
+  # Target latihan - jalan LOKAL di VPS sendiri, bukan public-facing
+  # ------------------------------------------------------------
+  dvwa-target:
+    image: vulnerables/web-dvwa
+    container_name: dvwa-target
+    ports:
+      - "127.0.0.1:8081:80"   # hanya bisa diakses dari VPS sendiri, tidak terekspos publik
+    networks:
+      - pipeline-net
+
+networks:
+  pipeline-net:
+    driver: bridge

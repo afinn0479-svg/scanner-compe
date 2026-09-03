@@ -1,0 +1,18 @@
+{
+  "_readme": "Test point HARUS diisi eksplisit di sini -- xss-tester TIDAK auto-discover form/parameter dari target. Kosong = tidak ada yang dites untuk target itu. Ganti PHPSESSID kalau sudah expired (jalankan ulang dvwa_login.sh).",
+
+  "practice-target": [
+    {
+      "url": "http://dvwa-target/vulnerabilities/xss_r/",
+      "method": "GET",
+      "param": "name",
+      "extra_params": {"Submit": "Submit"},
+      "cookies": {
+        "PHPSESSID": "8eq3j0jjvo18nl9ebb27892862",
+        "security": "low"
+      }
+    }
+  ],
+
+  "school-domain": []
+}

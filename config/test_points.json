@@ -1,0 +1,20 @@
+{
+  "_readme": "Test point HARUS diisi eksplisit di sini -- sqli-tester TIDAK auto-discover form/parameter dari target. Kosong = tidak ada yang dites untuk target itu.",
+
+  "practice-target": [
+    {
+      "_note": "PHPSESSID di-refresh via dvwa_login.sh. Kalau expired lagi, jalankan ulang script itu dan update value di bawah.",
+      "url": "http://dvwa-target/vulnerabilities/sqli/",
+      "method": "GET",
+      "param": "id",
+      "baseline": "1",
+      "extra_params": {"Submit": "Submit"},
+      "cookies": {
+        "PHPSESSID": "8eq3j0jjvo18nl9ebb27892862",
+        "security": "low"
+      }
+    }
+  ],
+
+  "school-domain": []
+}

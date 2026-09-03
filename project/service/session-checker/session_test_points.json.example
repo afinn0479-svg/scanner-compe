@@ -1,0 +1,17 @@
+{
+  "_readme": "Sama pola dengan test_points.json / xss_test_points.json -- HARUS diisi eksplisit. Isi dengan URL yang set cookie/session (mis. halaman login atau halaman setelah login).",
+
+  "practice-target": [
+    {
+      "_note": "DVWA login page, security=low",
+      "url": "http://dvwa-target/login.php",
+      "method": "GET",
+      "cookies": {
+        "PHPSESSID": "8eq3j0jjvo18nl9ebb27892862",
+        "security": "low"
+      }
+    }
+  ],
+
+  "school-domain": []
+}

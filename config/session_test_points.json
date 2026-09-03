@@ -1,0 +1,11 @@
+{
+  "practice-target": [
+    {
+      "_note": "DVWA login page TANPA cookie -- supaya server terbitkan sesi baru dan Set-Cookie header muncul untuk diinspeksi",
+      "url": "http://dvwa-target/login.php",
+      "method": "GET",
+      "cookies": {}
+    }
+  ],
+  "school-domain": []
+}

@@ -1,0 +1,20 @@
+{
+  "_readme": "Test point HARUS diisi eksplisit di sini -- sqli-tester TIDAK auto-discover form/parameter dari target. Kosong = tidak ada yang dites untuk target itu.",
+
+  "practice-target": [
+    {
+      "_note": "DVWA butuh login dulu sebelum halaman /vulnerabilities/sqli/ bisa diakses. Cara ambil cookie: 1) SSH tunnel dari komputer Anda: ssh -L 8081:127.0.0.1:8081 user@vps-anda  2) Buka http://127.0.0.1:8081 di browser lokal Anda  3) Login admin/password (default DVWA)  4) Di menu DVWA Security, set ke 'low'  5) Buka DevTools > Application/Storage > Cookies, salin value PHPSESSID dan security ke bawah ini",
+      "url": "http://dvwa-target/vulnerabilities/sqli/",
+      "method": "GET",
+      "param": "id",
+      "baseline": "1",
+      "extra_params": {"Submit": "Submit"},
+      "cookies": {
+        "PHPSESSID": "ISI: salin dari browser setelah login",
+        "security": "low"
+      }
+    }
+  ],
+
+  "school-domain": []
+}

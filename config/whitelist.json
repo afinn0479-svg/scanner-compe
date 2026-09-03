@@ -1,0 +1,27 @@
+{
+  "authorized_targets": [
+    {
+      "id": "practice-target",
+      "type": "practice",
+      "host": "dvwa-target",
+      "internal_only": true,
+      "allowed_stages": ["subdomain", "portscan", "sqli", "xss", "session", "hydra"],
+      "note": "Target latihan DVWA, berjalan lokal di VPS, tidak diekspos ke publik"
+    },
+    {
+      "id": "school-domain",
+      "type": "production",
+      "host": "smkn1bukateja.sch.id",
+      "internal_only": false,
+      "allowed_stages": ["subdomain", "portscan", "sqli", "xss", "session"],
+      "excluded_stages": ["hydra"],
+      "sqli_mode": "detection_only",
+      "xss_mode": "detection_only",
+      "authorization_ref": "ISI: nomor surat izin dari kepala sekolah",
+      "authorized_window": "ISI: jam/tanggal yang disetujui, mis. di luar jam sekolah",
+      "note": "WAJIB ada bukti izin tertulis sebelum mengaktifkan target ini"
+    }
+  ],
+  "default_policy": "deny",
+  "comment": "Target apapun yang tidak ada di daftar ini WAJIB ditolak scope-gate. Jangan pernah menambahkan domain baru tanpa izin tertulis."
+}
