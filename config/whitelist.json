@@ -5,20 +5,19 @@
       "type": "practice",
       "host": "dvwa-target",
       "internal_only": true,
-      "allowed_stages": ["subdomain", "portscan", "sqli", "xss", "session", "hydra"],
+      "allowed_stages": ["subdomain", "portscan", "sqli", "xss", "session"],
       "note": "Target latihan DVWA, berjalan lokal di VPS, tidak diekspos ke publik"
     },
     {
       "id": "school-domain",
       "type": "production",
-      "host": "smkn1bukateja.sch.id",
+      "host": "smkn1punggelan.sch.id",
       "internal_only": false,
       "allowed_stages": ["subdomain", "portscan", "sqli", "xss", "session"],
-      "excluded_stages": ["hydra"],
       "sqli_mode": "detection_only",
       "xss_mode": "detection_only",
-      "authorization_ref": "ISI: nomor surat izin dari kepala sekolah",
-      "authorized_window": "ISI: jam/tanggal yang disetujui, mis. di luar jam sekolah",
+      "authorization_ref": "1753962460899",
+      "authorized_window": "2026-09-04 09:00..2026-09-04 17:00",
       "note": "WAJIB ada bukti izin tertulis sebelum mengaktifkan target ini"
     }
   ],

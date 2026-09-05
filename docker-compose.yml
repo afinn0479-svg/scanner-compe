@@ -82,7 +82,7 @@ services:
     container_name: aggregator
     networks:
       - pipeline-net
-  
+
   notifier:
     build: ./project/service/notifier
     container_name: notifier
@@ -90,6 +90,25 @@ services:
       - .env
     networks:
       - pipeline-net
+
+  # ------------------------------------------------------------
+  # AI model router (opsional) - hemat biaya AI_MODEL_ENDPOINT
+  # hermes-orchestrator, sesuai rules poin 2 (tanggung jawab peserta)
+  # ------------------------------------------------------------
+  9router:
+    image: decolua/9router:latest
+    container_name: 9router
+    volumes:
+      - 9router-data:/app/data
+    environment:
+      - DATA_DIR=/app/data
+      - JWT_SECRET=${NINEROUTER_JWT_SECRET}
+      - INITIAL_PASSWORD=${NINEROUTER_INITIAL_PASSWORD}
+    ports:
+      - "127.0.0.1:20128:20128"   # dashboard cuma dari VPS sendiri, akses via SSH tunnel
+    networks:
+      - pipeline-net
+
   # ------------------------------------------------------------
   # Target latihan - jalan LOKAL di VPS sendiri, bukan public-facing
   # ------------------------------------------------------------
@@ -104,3 +123,6 @@ services:
 networks:
   pipeline-net:
     driver: bridge
+
+volumes:
+  9router-data:

@@ -77,7 +77,6 @@ def is_within_window(window_str: str):
         return True, "dalam jendela waktu yang diizinkan"
     return False, f"di luar jendela waktu yang diizinkan ({start_str.strip()} s/d {end_str.strip()} WIB)"
 
-
 def gate_check(target_id: str, stage: str):
     try:
         whitelist = load_whitelist()
